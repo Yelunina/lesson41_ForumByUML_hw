@@ -2,7 +2,7 @@ package ait.forum.model;
 
 import java.time.LocalDateTime;
 
-public class Post {
+public class Post implements Comparable<Post>{
     private int postId;
     private String title;
     private String author;
@@ -87,5 +87,10 @@ public class Post {
         result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
         result = 31 * result + getLikes();
         return result;
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        return Integer.compare(postId, o.postId);
     }
 }
