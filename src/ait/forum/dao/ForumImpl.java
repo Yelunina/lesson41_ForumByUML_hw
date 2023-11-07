@@ -67,11 +67,7 @@ public class ForumImpl implements Forum {
 
     @Override
     public Post[] getPostsByAuthor(String author) {
-        Post pattern = new Post(Integer.MIN_VALUE, author, null, null);
-        int from = -Arrays.binarySearch(posts, pattern, comparator) - 1;
-        pattern = new Post(Integer.MAX_VALUE, author, null, null);
-        int to = -Arrays.binarySearch(posts, pattern, comparator) - 1;
-        return Arrays.copyOfRange(posts, from, to);
+        return findByPredicate(post -> post.getAuthor().equals(author));
     }
 
     @Override

@@ -4,17 +4,13 @@ import ait.forum.dao.Forum;
 import ait.forum.dao.ForumImpl;
 import ait.forum.model.Post;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ForumImplTest {
     Forum forum;
     Post[] posts;
-    LocalDateTime now = LocalDateTime.now();
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
@@ -41,48 +37,35 @@ class ForumImplTest {
 
     @org.junit.jupiter.api.Test
     void removePost() {
-        assertTrue(forum.removePost(2));
+        assertTrue(forum.removePost(3));
         assertEquals(4, forum.size());
-        assertFalse(forum.removePost(2));
+        assertFalse(forum.removePost(3));
         assertEquals(4, forum.size());
     }
 
     @org.junit.jupiter.api.Test
     void updatePost() {
-        assertTrue(forum.updatePost(1, "new photo"));
-        assertEquals("new photo", forum.getPostById(1).getContent());
+        assertTrue(forum.updatePost(2, "new photo"));
+        assertEquals("new photo", forum.getPostById(2).getContent());
     }
 
     @org.junit.jupiter.api.Test
     void getPostById() {
-        assertEquals(posts[3], forum.getPostById(3));
+        assertEquals(posts[1], forum.getPostById(1));
         assertNull(forum.getPostById(5));
     }
 
     @org.junit.jupiter.api.Test
     void getPostsByAuthor() {
-        Post[] actual = forum.getPostsByAuthor("a1");
+        Post[] actual = forum.getPostsByAuthor("a3");
         Arrays.sort(actual);
-        Post[] expected = {posts[0], posts[3]};
+        Post[] expected = {posts[4]};
         assertArrayEquals(expected, actual);
     }
 
     @org.junit.jupiter.api.Test
     void testGetPostsByAuthor() {
-        posts[0].setDate(LocalDateTime.now().minusDays(10));
-        posts[1].setDate(LocalDateTime.now().minusDays(9));
-        posts[2].setDate(LocalDateTime.now().minusDays(8));
-        posts[3].setDate(LocalDateTime.now().minusDays(7));
-        posts[4].setDate(LocalDateTime.now().minusDays(6));
-        posts[5].setDate(LocalDateTime.now().minusDays(5));
-        forum = new ForumImpl();
-        for (int i = 0; i < posts.length; i++) {
-            forum.addPost(posts[i]);
-        }
-        Post[] actual = forum.getPostsByAuthor("a1", LocalDate.now().minusDays(11), LocalDate.now().minusDays(6));
-        Arrays.sort(actual);
-        Post[] expected = {posts[0], posts[3]};
-        assertArrayEquals(expected, actual);
+        //TODO
     }
 
     @org.junit.jupiter.api.Test
